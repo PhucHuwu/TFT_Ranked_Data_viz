@@ -40,7 +40,7 @@ except json.JSONDecodeError as e:
     sys.exit(1)
 
 try:
-    save_json(data, "leaderboard.json")
+    save_json(data, "data/leaderboard.json")
 except OSError as e:
     print(f"File write error: {e}")
     sys.exit(1)

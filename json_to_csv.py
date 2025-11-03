@@ -44,5 +44,5 @@ def convert_json_to_csv(input_file, output_file):
         writer.writerows(flattened)
 
 
-convert_json_to_csv("leaderboard.json", "leaderboard.csv")
-print("Saved CSV to leaderboard.csv")
+convert_json_to_csv("data/leaderboard.json", "data/leaderboard.csv")
+print("Saved CSV to data/leaderboard.csv")
