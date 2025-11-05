@@ -4,10 +4,8 @@ import plotly.graph_objects as go
 import folium
 from folium.plugins import MarkerCluster
 
-# Đọc dữ liệu
 df = pd.read_csv('data/leaderboard_cleaned.csv')
 
-# Map region codes sang tên đầy đủ và tọa độ
 region_info = {
     'vn2': {'name': 'Vietnam', 'lat': 16.0, 'lon': 108.0, 'continent': 'Asia'},
     'br1': {'name': 'Brazil', 'lat': -14.0, 'lon': -51.0, 'continent': 'Americas'},
@@ -27,17 +25,14 @@ region_info = {
     'tw2': {'name': 'Taiwan', 'lat': 23.7, 'lon': 121.0, 'continent': 'Asia'}
 }
 
-# Đếm số lượng người chơi theo region
 region_counts = df['summoner_region'].value_counts().reset_index()
 region_counts.columns = ['region_code', 'player_count']
 
-# Thêm thông tin chi tiết
 region_counts['region_name'] = region_counts['region_code'].map(lambda x: region_info.get(x, {}).get('name', x))
 region_counts['lat'] = region_counts['region_code'].map(lambda x: region_info.get(x, {}).get('lat', 0))
 region_counts['lon'] = region_counts['region_code'].map(lambda x: region_info.get(x, {}).get('lon', 0))
 region_counts['continent'] = region_counts['region_code'].map(lambda x: region_info.get(x, {}).get('continent', 'Unknown'))
 
-# Tính thêm thống kê
 region_stats = df.groupby('summoner_region').agg({
     'stats.wins': 'sum',
     'stats.num_played': 'sum',
@@ -48,15 +43,13 @@ region_stats['avg_winrate'] = (region_stats['stats.wins'] / region_stats['stats.
 region_counts = region_counts.merge(region_stats[['summoner_region', 'avg_winrate', 'rating_numeric']], 
                                      left_on='region_code', right_on='summoner_region', how='left')
 
-# === 1. FOLIUM MAP ===
 m = folium.Map(location=[20, 0], zoom_start=2, tiles='OpenStreetMap')
 
-# Thêm markers cho mỗi region
 for idx, row in region_counts.iterrows():
     if row['lat'] != 0 and row['lon'] != 0:
         folium.CircleMarker(
             location=[row['lat'], row['lon']],
-            radius=row['player_count'] / 10,  # Scale size
+            radius=row['player_count'] / 10,
             popup=f"""
                 <b>{row['region_name']}</b><br>
                 Players: {row['player_count']}<br>
@@ -70,7 +63,6 @@ for idx, row in region_counts.iterrows():
             weight=2
         ).add_to(m)
         
-        # Thêm label
         folium.Marker(
             location=[row['lat'], row['lon']],
             icon=folium.DivIcon(html=f"""
@@ -83,7 +75,6 @@ for idx, row in region_counts.iterrows():
 m.save('visualizations/region_map.html')
 print("✓ Đã tạo biểu đồ: visualizations/region_map.html")
 
-# === 2. SUNBURST CHART (Plotly Interactive) ===
 sunburst_data = region_counts.copy()
 sunburst_data['world'] = 'World'
 
@@ -113,7 +104,6 @@ fig.update_layout(
 fig.write_html('visualizations/region_sunburst.html')
 print("✓ Đã tạo biểu đồ: visualizations/region_sunburst.html")
 
-# Thống kê
 print("\n=== THỐNG KÊ NGƯỜI CHƠI THEO KHU VỰC ===")
 print(f"{'Rank':<5} {'Region':<25} {'Code':<8} {'Players':<10} {'Avg WR':<12} {'Avg Rating':<12}")
 print("-" * 85)
@@ -124,7 +114,6 @@ for idx, row in region_counts.sort_values('player_count', ascending=False).iterr
 print(f"\nTổng số người chơi: {region_counts['player_count'].sum()}")
 print(f"Số khu vực: {len(region_counts)}")
 
-# Top 5 regions
 print("\n=== TOP 5 KHU VỰC ĐÔNG NGƯỜI CHƠI NHẤT ===")
 top5 = region_counts.nlargest(5, 'player_count')
 for idx, row in top5.iterrows():

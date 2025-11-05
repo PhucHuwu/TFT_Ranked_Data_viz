@@ -1,23 +1,17 @@
-"""
-Master Script - Chạy tất cả các phân tích TFT Ranked Data
-Thực hiện 6 loại thống kê và tạo biểu đồ trực quan
-"""
-
 import os
 import sys
 from datetime import datetime
 
 def run_analysis(script_name, description):
-    """Chạy một script phân tích"""
     print("\n" + "="*70)
     print(f"ĐANG CHẠY: {description}")
     print("="*70)
     try:
         exec(open(script_name, encoding='utf-8').read(), {'__name__': '__main__'})
-        print(f"✅ Hoàn thành: {description}")
+        print(f"Hoàn thành: {description}")
         return True
     except Exception as e:
-        print(f"❌ Lỗi khi chạy {script_name}: {str(e)}")
+        print(f"Lỗi khi chạy {script_name}: {str(e)}")
         return False
 
 def main():
@@ -26,12 +20,10 @@ def main():
     print("="*70)
     print(f"Thời gian bắt đầu: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
-    # Tạo thư mục visualizations nếu chưa có
     if not os.path.exists('visualizations'):
         os.makedirs('visualizations')
-        print("✓ Đã tạo thư mục 'visualizations'")
+        print("Đã tạo thư mục 'visualizations'")
     
-    # Danh sách các phân tích
     analyses = [
         {
             'script': 'analysis_item_data.py',
@@ -59,7 +51,6 @@ def main():
         }
     ]
     
-    # Chạy từng phân tích
     results = []
     for analysis in analyses:
         success = run_analysis(analysis['script'], analysis['description'])
@@ -68,7 +59,6 @@ def main():
             'success': success
         })
     
-    # Tổng kết
     print("\n" + "="*70)
     print("TỔNG KẾT")
     print("="*70)
@@ -79,8 +69,7 @@ def main():
     print(f"\nĐã hoàn thành: {successful}/{total} phân tích")
     print("\nChi tiết:")
     for i, result in enumerate(results, 1):
-        status = "✅" if result['success'] else "❌"
-        print(f"{status} {result['name']}")
+        print(f"{result['name']}")
     
     print("\n" + "="*70)
     print("CÁC FILE BIỂU ĐỒ ĐÃ TẠO (trong thư mục visualizations/):")

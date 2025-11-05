@@ -4,10 +4,8 @@ import plotly.graph_objects as go
 from scipy import stats
 import numpy as np
 
-# Đọc dữ liệu
 df = pd.read_csv('data/leaderboard_cleaned.csv')
 
-# Lấy dữ liệu
 damage_data = df[['stats.RecentResult.damage_percentile_sum', 
                    'stats.RecentResult.board_strength_percentile_sum',
                    'summoner_region',
@@ -20,15 +18,12 @@ damage_data = damage_data.rename(columns={
     'summoner_region': 'region'
 })
 
-# Tính winrate
 damage_data['winrate'] = (damage_data['stats.wins'] / damage_data['stats.num_played'] * 100)
 
-# Phân loại phong cách chơi
 def classify_playstyle(row):
     damage = row['damage']
     board = row['board_strength']
     
-    # Tính điểm tương đối (so với median)
     damage_median = damage_data['damage'].median()
     board_median = damage_data['board_strength'].median()
     
@@ -43,17 +38,14 @@ def classify_playstyle(row):
 
 damage_data['playstyle'] = damage_data.apply(classify_playstyle, axis=1)
 
-# Tính hồi quy tuyến tính
 slope, intercept, r_value, p_value, std_err = stats.linregress(
     damage_data['damage'], 
     damage_data['board_strength']
 )
 
-# Tạo đường hồi quy
 x_range = np.linspace(damage_data['damage'].min(), damage_data['damage'].max(), 100)
 y_pred = slope * x_range + intercept
 
-# === SCATTER PLOT với Regression ===
 fig = px.scatter(
     damage_data,
     x='damage',
@@ -76,7 +68,6 @@ fig = px.scatter(
     }
 )
 
-# Thêm đường hồi quy
 fig.add_trace(
     go.Scatter(
         x=x_range,
@@ -88,7 +79,6 @@ fig.add_trace(
     )
 )
 
-# Thêm đường median
 fig.add_hline(
     y=damage_data['board_strength'].median(),
     line_dash="dot",
@@ -112,7 +102,6 @@ fig.update_layout(
 fig.write_html('visualizations/playstyle_scatter.html')
 print("✓ Đã tạo biểu đồ: visualizations/playstyle_scatter.html")
 
-# Thống kê
 print("\n=== THỐNG KÊ PHONG CÁCH CHƠI ===")
 print(f"\nHệ số tương quan (R²): {r_value**2:.4f}")
 print(f"P-value: {p_value:.6f}")

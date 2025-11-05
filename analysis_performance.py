@@ -4,19 +4,15 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import numpy as np
 
-# Đọc dữ liệu
 df = pd.read_csv('data/leaderboard_cleaned.csv')
 
-# Tính các chỉ số performance
 df['winrate'] = (df['stats.wins'] / df['stats.num_played'] * 100)
 df['avg_placement'] = df['stats.place_sum'] / df['stats.num_played']
-df['top4_rate'] = (df['stats.wins'] / df['stats.num_played'] * 100)  # Giả định wins = top4
+df['top4_rate'] = (df['stats.wins'] / df['stats.num_played'] * 100)
 
-# Lọc dữ liệu hợp lệ
 perf_data = df[['winrate', 'avg_placement', 'summoner_region', 'rating_numeric', 
                 'stats.num_played', 'stats.RecentResult.avg_similarity']].dropna()
 
-# Phân loại performance
 def classify_performance(row):
     wr = row['winrate']
     ap = row['avg_placement']
@@ -32,17 +28,13 @@ def classify_performance(row):
 
 perf_data['performance_tier'] = perf_data.apply(classify_performance, axis=1)
 
-# === 1. CORRELATION HEATMAP ===
-# Chọn các metrics để tính correlation
 corr_cols = ['winrate', 'avg_placement', 'rating_numeric', 'stats.num_played', 
              'stats.RecentResult.avg_similarity']
 corr_data = perf_data[corr_cols].copy()
 corr_data.columns = ['Winrate', 'Avg Placement', 'Rating', 'Games Played', 'Avg Similarity']
 
-# Tính correlation matrix
 corr_matrix = corr_data.corr()
 
-# Tạo heatmap
 fig_heatmap = go.Figure(data=go.Heatmap(
     z=corr_matrix.values,
     x=corr_matrix.columns,
@@ -66,7 +58,6 @@ fig_heatmap.update_layout(
 fig_heatmap.write_html('visualizations/performance_heatmap.html')
 print("✓ Đã tạo biểu đồ: visualizations/performance_heatmap.html")
 
-# === 2. VIOLIN PLOT cho Winrate và Avg Placement ===
 fig = make_subplots(
     rows=2, cols=2,
     subplot_titles=(
@@ -79,11 +70,9 @@ fig = make_subplots(
            [{"type": "violin"}, {"type": "violin"}]]
 )
 
-# Top 8 regions by player count
 top_regions = perf_data['summoner_region'].value_counts().head(8).index.tolist()
 region_data = perf_data[perf_data['summoner_region'].isin(top_regions)]
 
-# Violin 1: Winrate by Region
 for region in top_regions:
     region_subset = region_data[region_data['summoner_region'] == region]
     fig.add_trace(
@@ -97,7 +86,6 @@ for region in top_regions:
         row=1, col=1
     )
 
-# Violin 2: Avg Placement by Region
 for region in top_regions:
     region_subset = region_data[region_data['summoner_region'] == region]
     fig.add_trace(
@@ -111,7 +99,6 @@ for region in top_regions:
         row=1, col=2
     )
 
-# Violin 3: Winrate by Performance Tier
 for tier in ['Elite', 'High Performer', 'Above Average', 'Average']:
     tier_data = perf_data[perf_data['performance_tier'] == tier]
     if len(tier_data) > 0:
@@ -126,7 +113,6 @@ for tier in ['Elite', 'High Performer', 'Above Average', 'Average']:
             row=2, col=1
         )
 
-# Violin 4: Avg Placement by Performance Tier
 for tier in ['Elite', 'High Performer', 'Above Average', 'Average']:
     tier_data = perf_data[perf_data['performance_tier'] == tier]
     if len(tier_data) > 0:
@@ -156,7 +142,6 @@ fig.update_layout(
 fig.write_html('visualizations/performance_violin.html')
 print("✓ Đã tạo biểu đồ: visualizations/performance_violin.html")
 
-# Thống kê
 print("\n=== THỐNG KÊ HIỆU SUẤT NGƯỜI CHƠI ===")
 print(f"Winrate:")
 print(f"  Mean: {perf_data['winrate'].mean():.2f}%")

@@ -7,10 +7,8 @@ from wordcloud import WordCloud
 import networkx as nx
 import plotly.graph_objects as go
 
-# Đọc dữ liệu
 df = pd.read_csv('data/leaderboard_cleaned.csv')
 
-# Parse JSON data từ topCarries
 all_carries = []
 character_stats = {}
 
@@ -33,15 +31,12 @@ for carries_str in df['stats.RecentResult.topCarries'].dropna():
         except:
             continue
 
-# Đếm tần suất
 carry_counter = Counter(all_carries)
 top_carries = carry_counter.most_common(20)
 
-# Tính avg placement cho mỗi tướng
 for char in character_stats:
     character_stats[char]['avg_placement'] = sum(character_stats[char]['avg_placements']) / len(character_stats[char]['avg_placements'])
 
-# === 1. WORDCLOUD ===
 wordcloud = WordCloud(
     width=1200,
     height=600,
@@ -60,18 +55,13 @@ plt.tight_layout(pad=0)
 plt.savefig('visualizations/top_carries_wordcloud.png', dpi=300, bbox_inches='tight')
 print("✓ Đã tạo biểu đồ: visualizations/top_carries_wordcloud.png")
 
-# === 2. NETWORK GRAPH (Plotly Interactive) ===
-# Tạo network graph cho top 15 tướng
 top_15_chars = [char for char, _ in top_carries[:15]]
 
-# Tạo graph
 G = nx.Graph()
 
-# Thêm nodes (tướng)
 for char, count in top_carries[:15]:
     G.add_node(char, size=count, avg_place=character_stats[char]['avg_placement'])
 
-# Tạo edges dựa trên việc xuất hiện cùng nhau trong topCarries
 edge_weights = {}
 for carries_str in df['stats.RecentResult.topCarries'].dropna():
     if carries_str and carries_str != '[]':
@@ -87,15 +77,12 @@ for carries_str in df['stats.RecentResult.topCarries'].dropna():
         except:
             continue
 
-# Thêm edges với trọng số > 2
 for edge, weight in edge_weights.items():
     if weight > 2:
         G.add_edge(edge[0], edge[1], weight=weight)
 
-# Tạo layout
 pos = nx.spring_layout(G, k=2, iterations=50)
 
-# Tạo edge traces
 edge_trace = []
 for edge in G.edges():
     x0, y0 = pos[edge[0]]
@@ -112,7 +99,6 @@ for edge in G.edges():
         )
     )
 
-# Tạo node trace
 node_x = []
 node_y = []
 node_size = []
@@ -152,7 +138,6 @@ node_trace = go.Scatter(
     showlegend=False
 )
 
-# Tạo figure
 fig = go.Figure(data=edge_trace + [node_trace])
 
 fig.update_layout(
@@ -169,7 +154,6 @@ fig.update_layout(
 fig.write_html('visualizations/top_carries_network.html')
 print("✓ Đã tạo biểu đồ: visualizations/top_carries_network.html")
 
-# Thống kê
 print("\n=== TOP 20 TƯỚNG CARRY PHỔ BIẾN ===")
 print(f"{'Rank':<5} {'Champion':<20} {'Picks':<10} {'Avg Placement':<15}")
 print("-" * 50)
