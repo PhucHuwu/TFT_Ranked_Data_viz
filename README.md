@@ -30,21 +30,21 @@ This project delivers an end-to-end pipeline for analyzing TFT Challenger leader
 
 ```
 TFT_Ranked_Data_viz/
-├── tft_leaderboard_fetch.py      # Data acquisition from MetaTFT API
-├── json_to_csv.py                # JSON to CSV conversion utility
-├── cleandata.ipynb               # Data cleaning and preprocessing notebook
-├── run_all_analysis.py           # Orchestration script for all analyses
-├── analysis_item_data.py         # Item composition treemap generator
-├── analysis_avg_similarity.py    # Flexibility metrics analysis
-├── analysis_top_carries.py       # Carry champion analysis and network visualization
-├── analysis_playstyle.py         # Playstyle scatter plot with regression
-├── analysis_region.py            # Geographic distribution analysis
-├── analysis_performance.py       # Performance correlation and distribution analysis
-├── data/                         # Data directory
-│   ├── leaderboard.json          # Raw API response
-│   ├── leaderboard.csv           # Flattened dataset
-│   └── leaderboard_cleaned.csv   # Processed dataset for analysis
-├── visualizations/               # Generated visualization outputs
+├── tft_leaderboard_fetch.py                # Data acquisition from MetaTFT API
+├── json_to_csv.py                          # JSON to CSV conversion utility
+├── cleandata.ipynb                         # Data cleaning and preprocessing notebook
+├── run_all_analysis.py                     # Orchestration script for all analyses
+├── analysis_item_data.py                   # Item composition treemap generator
+├── analysis_avg_similarity.py              # Flexibility metrics analysis
+├── analysis_top_carries.py                 # Carry champion analysis and network visualization
+├── analysis_playstyle.py                   # Playstyle scatter plot with regression
+├── analysis_region.py                      # Geographic distribution analysis
+├── analysis_performance.py                 # Performance correlation and distribution analysis
+├── data/                                   # Data directory
+│   ├── leaderboard.json                    # Raw API response
+│   ├── leaderboard.csv                     # Flattened dataset
+│   └── leaderboard_cleaned.csv             # Processed dataset for analysis
+├── visualizations/                         # Generated visualization outputs
 │   ├── item_data_treemap.html
 │   ├── avg_similarity_distribution.html
 │   ├── top_carries_wordcloud.png
@@ -54,9 +54,9 @@ TFT_Ranked_Data_viz/
 │   ├── region_sunburst.html
 │   ├── performance_heatmap.html
 │   └── performance_violin.html
-├── index.html                    # Landing page template
-├── requirements.txt              # Python dependencies
-└── README.md                     # Project documentation
+├── index.html                              # Landing page template
+├── requirements.txt                        # Python dependencies
+└── README.md                               # Project documentation
 ```
 
 
