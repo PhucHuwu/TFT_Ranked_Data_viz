@@ -1,4 +1,333 @@
-# TFT Ranked Data Visualization
+# 🎮 TFT Ranked Data Visualization & Analysis
+
+## 📊 Project Overview
+
+Comprehensive data analysis and visualization project for **TeamFight Tactics (TFT) Challenger players** across 15 global regions. This project analyzes gameplay patterns, champion preferences, playstyles, and performance metrics of 1000+ top-tier players.
+
+---
+
+## ✨ Features
+
+### 6 Major Statistical Analyses:
+1. **📦 Item Distribution (AD/AP/Tank)** - Player build preferences
+2. **🔄 Flexibility Analysis** - Composition diversity vs one-tricking
+3. **👑 Top Carries Analysis** - Most used champions
+4. **⚔️ Playstyle Classification** - Eco vs High Tempo strategies
+5. **🌍 Regional Distribution** - Player demographics across 15 regions
+6. **📈 Performance Metrics** - Winrate & Average Placement correlation
+
+### 9 Interactive & Static Visualizations:
+- 🎨 **8 Interactive Charts** (Plotly/Folium)
+- 🖼️ **1 Static Visualization** (WordCloud)
+
+---
+
+## 🚀 Quick Start
+
+### 1. Installation
+```bash
+# Clone repository
+git clone https://github.com/PhucHuwu/TFT_Ranked_Data_viz.git
+cd TFT_Ranked_Data_viz
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 2. Run Analysis
+```bash
+# Run all 6 analyses at once
+python run_all_analysis.py
+
+# Or run individually
+python analysis_item_data.py
+python analysis_avg_similarity.py
+python analysis_top_carries.py
+python analysis_playstyle.py
+python analysis_region.py
+python analysis_performance.py
+```
+
+### 3. View Results
+- **Dashboard:** Open `index.html` in your browser
+- **Individual Charts:** Open files in `visualizations/` folder
+- **Summary Report:** Read `ANALYSIS_SUMMARY.md`
+
+---
+
+## 📁 Project Structure
+
+```
+TFT_Ranked_Data_viz/
+│
+├── 📄 index.html                         ⭐ Main Dashboard (START HERE!)
+├── 📄 ANALYSIS_SUMMARY.md                📝 Detailed findings report
+├── 📄 README_ANALYSIS.md                 📚 Technical documentation
+├── 📄 QUICK_START.md                     🚀 Quick start guide
+│
+├── 📂 data/
+│   ├── leaderboard.json                  🗂️ Raw data
+│   ├── leaderboard.csv                   🗂️ Converted CSV
+│   └── leaderboard_cleaned.csv           ✅ Cleaned dataset
+│
+├── 📂 visualizations/                    🎨 All output charts
+│   ├── item_data_treemap.html           (Interactive - Plotly)
+│   ├── avg_similarity_distribution.html  (Interactive - Plotly)
+│   ├── top_carries_wordcloud.png         (Static - Matplotlib)
+│   ├── top_carries_network.html          (Interactive - Plotly)
+│   ├── playstyle_scatter.html            (Interactive - Plotly)
+│   ├── region_map.html                   (Interactive - Folium)
+│   ├── region_sunburst.html              (Interactive - Plotly)
+│   ├── performance_heatmap.html          (Interactive - Plotly)
+│   └── performance_violin.html           (Interactive - Plotly)
+│
+├── 🐍 Analysis Scripts:
+│   ├── run_all_analysis.py               ▶️ Master script
+│   ├── analysis_item_data.py             #1 Item distribution
+│   ├── analysis_avg_similarity.py        #2 Flexibility analysis
+│   ├── analysis_top_carries.py           #3 Champion usage
+│   ├── analysis_playstyle.py             #4 Playstyle classification
+│   ├── analysis_region.py                #5 Regional demographics
+│   └── analysis_performance.py           #6 Performance metrics
+│
+├── 🛠️ Utilities:
+│   ├── tft_leaderboard_fetch.py          📥 Data fetching
+│   ├── json_to_csv.py                    🔄 Data conversion
+│   └── cleandata.ipynb                   🧹 Data cleaning
+│
+└── 📄 requirements.txt                   📦 Python dependencies
+```
+
+---
+
+## 📊 Key Findings
+
+### 🏆 Top Insights:
+
+1. **🛡️ Tank Meta Dominance**
+   - Tank items: **41.66%** (highest)
+   - AD items: 31.61%
+   - AP items: 26.73%
+
+2. **🎯 Flexible Gameplay**
+   - **62.4%** players are flexible (diverse compositions)
+   - Only **1.8%** spam one comp
+   - Healthy meta diversity
+
+3. **👑 Most Popular Carries**
+   - **Lee Sin** - 164 picks (avg placement: 3.01)
+   - **Braum** - 141 picks (avg placement: 3.09)
+   - **K'Sante** - 100 picks (avg placement: 3.56)
+
+4. **⚔️ High Tempo Wins More**
+   - High Tempo: **17.97%** avg winrate (highest)
+   - Eco: 16.08% avg winrate
+   - Playstyle balance across 4 categories
+
+5. **🌏 Asia Dominates**
+   - **Vietnam: 34.6%** (346 players)
+   - **Korea: 30.5%** (305 players)
+   - Combined: **65.1%** of all Challenger players
+
+6. **📈 Consistency is Key**
+   - Winrate vs Avg Placement: **-0.73 correlation** (strong)
+   - Elite tier (top 1.8%): ~30% WR, ~3.3 avg placement
+   - Importance of top 4 consistency
+
+---
+
+## 📈 Visualizations
+
+### Interactive Charts (8 total)
+| # | Visualization | Type | Technology | Description |
+|---|---------------|------|------------|-------------|
+| 1 | **Treemap** | Hierarchical | Plotly | Item distribution (AD/AP/Tank) |
+| 2 | **Histogram + Boxplot** | Distribution | Plotly | Flexibility analysis |
+| 3 | **Network Graph** | Relationship | Plotly | Champion connections |
+| 4 | **Scatter + Regression** | Correlation | Plotly | Playstyle classification |
+| 5 | **World Map** | Geographic | Folium | Regional player distribution |
+| 6 | **Sunburst** | Hierarchical | Plotly | Continent → Region breakdown |
+| 7 | **Heatmap** | Correlation | Plotly | Performance metrics correlation |
+| 8 | **Violin Plot** | Distribution | Plotly | Performance by region/tier |
+
+### Static Charts (1 total)
+| # | Visualization | Type | Technology | Description |
+|---|---------------|------|------------|-------------|
+| 9 | **WordCloud** | Text | Matplotlib | Champion frequency |
+
+**Total: 9 visualizations** (8 interactive + 1 static)
+
+---
+
+## 🔬 Technical Details
+
+### Data Source
+- **Source:** TFT Official API / Leaderboard
+- **Sample Size:** 1000 Challenger players
+- **Regions:** 15 (VN, BR, EUNE, EUW, JP, KR, LAN, LAS, ME, NA, OCE, PBE, RU, SEA, TR, TW)
+- **Metrics Analyzed:**
+  - ItemData (AD, AP, Tank counts)
+  - avg_similarity (composition diversity)
+  - topCarries (JSON data)
+  - damage_percentile_sum, board_strength_percentile_sum
+  - Winrate, Average Placement, Rating
+
+### Technologies Used
+| Category | Technologies |
+|----------|-------------|
+| **Language** | Python 3.10+ |
+| **Data Processing** | Pandas, NumPy |
+| **Interactive Viz** | Plotly, Folium |
+| **Static Viz** | Matplotlib, Seaborn, WordCloud |
+| **Network Analysis** | NetworkX |
+| **Statistics** | SciPy |
+| **Web** | HTML, CSS, JavaScript |
+
+### Requirements
+See `requirements.txt`:
+```
+pandas
+numpy
+matplotlib
+seaborn
+plotly
+altair
+wordcloud
+folium
+networkx
+scipy
+```
+
+---
+
+## 📚 Documentation
+
+| File | Description |
+|------|-------------|
+| `README.md` | This file - Project overview |
+| `README_ANALYSIS.md` | Detailed methodology & analysis explanation |
+| `ANALYSIS_SUMMARY.md` | Comprehensive findings report with all insights |
+| `QUICK_START.md` | Quick start guide for viewing results |
+
+---
+
+## 🎯 Use Cases
+
+### For Players:
+- 📊 Understand current meta trends
+- 🎯 Learn which carries to prioritize
+- 💡 Discover optimal playstyles
+- 📈 Benchmark your performance
+
+### For Analysts:
+- 🔍 Deep dive into regional differences
+- 📉 Correlation analysis between metrics
+- 🎨 Data visualization best practices
+- 🐍 Reusable Python analysis scripts
+
+### For Educators:
+- 📚 Example of comprehensive data analysis
+- 🎨 Showcase of diverse visualization types
+- 💻 Clean, documented Python code
+- 📊 Real-world dataset analysis
+
+---
+
+## 🌟 Highlights
+
+✅ **6 comprehensive analyses**  
+✅ **9 professional visualizations**  
+✅ **8 interactive charts** (Plotly/Folium)  
+✅ **1000+ players analyzed**  
+✅ **15 regions covered**  
+✅ **Beautiful HTML dashboard**  
+✅ **Detailed documentation**  
+✅ **Reusable Python scripts**  
+✅ **Clean, modular code**  
+✅ **Open source**  
+
+---
+
+## 📖 How to Read This Project
+
+### For Quick Overview:
+1. Open `index.html` - Beautiful dashboard
+2. Read `QUICK_START.md` - 5-minute guide
+3. Check key findings in this README
+
+### For Deep Analysis:
+1. Read `ANALYSIS_SUMMARY.md` - Full report
+2. Read `README_ANALYSIS.md` - Methodology
+3. Explore individual visualizations
+4. Review Python scripts for implementation
+
+### For Developers:
+1. Check `requirements.txt` - Dependencies
+2. Review analysis scripts (`.py` files)
+3. Understand data pipeline:
+   - Fetch → Convert → Clean → Analyze → Visualize
+4. Modify and extend as needed
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Areas for improvement:
+- 🔄 Add more statistical analyses
+- 🎨 Create additional visualizations
+- 📊 Analyze different patches/seasons
+- 🌍 Add more regional breakdowns
+- 🤖 Machine learning predictions
+- 📱 Mobile-friendly dashboard
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👤 Author
+
+**PhucHuwu**
+- GitHub: [@PhucHuwu](https://github.com/PhucHuwu)
+- Project: [TFT_Ranked_Data_viz](https://github.com/PhucHuwu/TFT_Ranked_Data_viz)
+
+---
+
+## 🙏 Acknowledgments
+
+- TFT API for providing leaderboard data
+- Plotly team for amazing interactive visualization library
+- Python data science community
+- All Challenger players whose data made this analysis possible
+
+---
+
+## 📞 Support
+
+For questions, issues, or feedback:
+- 📧 Open an issue on GitHub
+- 📝 Check documentation files
+- 💬 Review code comments
+
+---
+
+## 🎉 Quick Links
+
+- 🏠 [Main Dashboard](index.html) - Start here!
+- 📊 [Analysis Summary](ANALYSIS_SUMMARY.md) - Key findings
+- 🚀 [Quick Start Guide](QUICK_START.md) - Get started
+- 📚 [Technical Docs](README_ANALYSIS.md) - Methodology
+
+---
+
+**⭐ If you find this project useful, please give it a star!**
+
+---
+
+*Last Updated: November 2025*
 
 A Python-based project for fetching and processing Teamfight Tactics (TFT) leaderboard data from the MetaTFT API.
 
